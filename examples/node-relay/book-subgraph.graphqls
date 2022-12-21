@@ -1,0 +1,32 @@
+# Opt in to Federation 2
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: [
+      "@key"
+      "@inaccessible"
+      "@external"
+      "@tag"
+      "@shareable"
+      "@requires"
+    ]
+  )
+  @link(url: "https://graphql.wayfair.com/owner/v1.0", import: ["@owner"])
+
+schema {
+  query: Query
+}
+
+type Query {
+  book: Book
+}
+
+type Book @key(fields: "bookId author { fullName }") {
+  bookId: String!
+  author: Author!
+}
+
+type Author @key(fields: "authorId") {
+  authorId: String!
+  fullName: String! @external
+}
