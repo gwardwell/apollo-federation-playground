@@ -1,0 +1,5 @@
+*.swp
+*.graphql
+node_modules
+.DS_Store
+router
