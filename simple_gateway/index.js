@@ -1,7 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { ApolloGateway } = require('@apollo/gateway');
 const { readFileSync } = require('fs');
-const {serializeQueryPlan} = require('@apollo/query-planner');
+const { serializeQueryPlan } = require('@apollo/query-planner');
 
 const supergraphSdl = readFileSync('./supergraph.graphql').toString();
 
@@ -9,11 +9,11 @@ const supergraphSdl = readFileSync('./supergraph.graphql').toString();
 // the supergraph schema as a string
 const gateway = new ApolloGateway({
   supergraphSdl,
-  experimental_didResolveQueryPlan: function(options) {
+  experimental_didResolveQueryPlan: function (options) {
     if (options.requestContext.operationName !== 'IntrospectionQuery') {
       console.log(serializeQueryPlan(options.queryPlan));
     }
-  }
+  },
 });
 
 // Pass the ApolloGateway to the ApolloServer constructor
@@ -21,6 +21,6 @@ const server = new ApolloServer({
   gateway,
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: 4001 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });

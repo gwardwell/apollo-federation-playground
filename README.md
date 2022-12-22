@@ -44,7 +44,7 @@ supergraph schema running on http://localhost:4000/.
 
 You can then make whatever queries you like against http://localhost:4000/. Note that the examples here
 will fail to resolve since the resolver endpoints are fake. You can view the query plan for your operation via
-the Apollo Sandbox query planner tab or in
+the Apollo Sandbox query planner tab.
 
 ### Viewing an Apollo Gateway query plan
 
@@ -63,9 +63,9 @@ rover supergraph compose --config ./supergraph.yaml > supergraph.graphql && node
 ```
 
 This will compose the supergraph schema for your example and start a Node.JS Apollo Gateway using that
-supergraph schema running on http://localhost:4000/.
+supergraph schema running on http://localhost:4001/.
 
-You can then make whatever queries you like against http://localhost:4000/. Note that the examples here
+You can then make whatever queries you like against http://localhost:4001/. Note that the examples here
 will fail to resolve since the resolver endpoints are fake. The query plan will be printed to the terminal.
 
 [install rover]: https://www.apollographql.com/docs/rover/getting-started
