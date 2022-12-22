@@ -18,7 +18,7 @@ schema {
 }
 
 type Query {
-  c: Boolean!
+  node(id: ID): Node
 }
 
 interface Node {
