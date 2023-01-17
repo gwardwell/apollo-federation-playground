@@ -341,3 +341,7 @@ QueryPlan {
 ```
 
 The query is able to successfully move between subgraphs, retrieving all entity values.
+
+## Notes
+
+If there are collisions between complex keys that would result in failure to resolve child entities, additional subgraphs could be created (`node_relay_complex_keys_subgraph_N`) that could resolve those problems. I could create a contrived example if it would help illustrate this problem.
