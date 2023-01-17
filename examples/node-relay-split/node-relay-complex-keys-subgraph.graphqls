@@ -1,0 +1,42 @@
+# Opt in to Federation 2
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: [
+      "@key"
+      "@inaccessible"
+      "@external"
+      "@tag"
+      "@shareable"
+      "@requires"
+      "@provides"
+    ]
+  )
+
+schema {
+  query: Query
+}
+
+type Query {
+  dummyNodeRelayComplexKeys: Boolean
+}
+
+interface Node {
+  id: ID!
+}
+
+# This subgraph federated on the id fields of entities that have complex
+# keys. If complex key entities were to also collide, more complex key
+# node relay subgraphs could be created to split federation further.
+type Book implements Node @key(fields: "bookId author { fullName }") {
+  bookId: String!
+  author: Author!
+  id: ID!
+}
+
+# Author does not receive a key or the Node interface in this subgraph.
+# It is a reference only.
+type Author @key(fields: "authorId", resolvable: false) {
+  authorId: String!
+  fullName: String! @external
+}

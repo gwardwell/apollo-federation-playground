@@ -1,0 +1,27 @@
+# Opt in to Federation 2
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: [
+      "@key"
+      "@inaccessible"
+      "@external"
+      "@tag"
+      "@shareable"
+      "@requires"
+      "@provides"
+    ]
+  )
+
+schema {
+  query: Query
+}
+
+type Query {
+  b: Boolean
+}
+
+type Author @key(fields: "authorId") {
+  authorId: String!
+  fullName: String!
+}

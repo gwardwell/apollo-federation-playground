@@ -1,0 +1,19 @@
+federation_version: 2
+subgraphs:
+  book_subgraph:
+    routing_url: https://films.example.com
+    schema:
+      file: ./book-subgraph.graphqls
+  author_subgraph:
+    routing_url: https://films.example.com
+    schema:
+      file: ./author-subgraph.graphqls
+  node_relay_subgraph:
+    routing_url: https://films.example.com
+    schema:
+      file: ./node-relay-subgraph.graphqls
+  node_relay_complex_keys_subgraph:
+    routing_url: https://films.example.com
+    schema:
+      file: ./node-relay-complex-keys-subgraph.graphqls
+
