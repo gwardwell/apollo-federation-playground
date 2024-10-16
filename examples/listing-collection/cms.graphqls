@@ -1,0 +1,111 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.8"
+    import: ["@key", "@external", "@interfaceObject", "@shareable"]
+  )
+
+# CMS Subgraph
+scalar URL
+
+type Query {
+  """
+  A generic web experience
+  """
+  experience(
+    """
+    The routing URL for the experience
+    """
+    route: URL
+  ): Experience
+}
+
+"""
+Generic example of an experience type
+"""
+type Experience {
+  test: Boolean!
+  """
+  The blocks that make up the experience layout
+  """
+  blocks: [ExperienceBlock!]
+}
+
+"""
+The blocks that make up an experience, which will be more than just a ListingCollection
+"""
+union ExperienceBlock = CategoryListingCollection | SearchListingCollection
+
+type ListingCollectionItem
+  @key(fields: "product { sku } templateId")
+  @interfaceObject {
+  templateId: String!
+  product: Product!
+  """
+  The blocks that make up the ListingCollectionItem's layout
+  """
+  blocks: [ListingCollectionItemBlock!]
+}
+
+"""
+The possible child blocks that make up the layout of a ListingCollectionItem
+"""
+union ListingCollectionItemBlock =
+    ListingCollectionItemImage
+  | ListingCollectionItemName
+
+"""
+The Image block for a ListingCollectionItem
+"""
+type ListingCollectionItemImage {
+  """
+  The display size of the image
+  """
+  size: ImageSize!
+  """
+  The item associated with this block
+  """
+  product: Product!
+}
+
+"""
+The image size
+"""
+enum ImageSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+"""
+The name block for a ListingCollectionItem
+"""
+type ListingCollectionItemName {
+  """
+  The max number of lines that should be shown before the name is truncated
+  """
+  maxLines: Int!
+  """
+  The item associated with this block
+  """
+  product: Product!
+}
+
+# External and shared schema references
+type Product @key(fields: "sku") {
+  sku: String!
+}
+
+type ProductCategory @key(fields: "categoryId") {
+  categoryId: Int!
+}
+
+type SearchListingCollection @key(fields: "searchTerm templateId") {
+  templateId: String!
+  searchTerm: String!
+}
+
+type CategoryListingCollection
+  @key(fields: "category { categoryId } templateId") {
+  templateId: String!
+  category: ProductCategory!
+}

@@ -1,0 +1,101 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.8"
+    import: ["@key", "@external", "@interfaceObject", "@shareable"]
+  )
+
+# Globally Shared Schema
+"""
+A cursor connection for ListingCollectionItems
+"""
+interface ListingCollectionCursorConnection {
+  """
+  The paginated items associated with the cursor connection
+  """
+  items(
+    """
+    The number of requested items following the 'after' cursor
+    """
+    first: Int
+    """
+    The last cursor of the previous record set
+    """
+    after: String
+    """
+    The number of requested items prior to the 'before' cursor
+    """
+    last: Int
+    """
+    The start cursor of the previous record set
+    """
+    before: String
+  ): ListingCollectionItemCursorConnection!
+}
+
+"""
+A paginated cursor connection for ListingCollectionItems
+"""
+type ListingCollectionItemCursorConnection @shareable {
+  """
+  The edges associated with the current slice of the cursor connection
+  """
+  edges: [ListingCollectionItemEdge!]!
+  """
+  The pagination information associated with the current slice of the cursor connection
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+A cursor connection edge representing a ListingCollectionItem
+"""
+type ListingCollectionItemEdge @shareable {
+  """
+  The node at the end of the edge
+  """
+  node: ListingCollectionItem!
+  """
+  The cursor associated with this edge
+  """
+  cursor: String!
+}
+
+"""
+"""
+type PageInfo @shareable {
+  """
+  Whether or not the connection has another page
+  """
+  hasNextPage: Boolean!
+  """
+  Whether or not the connection has a previous page
+  """
+  hasPreviousPage: Boolean!
+  """
+  The cursor at the beginning of the current list of edges
+  """
+  startCursor: String
+  """
+  The cursor at the end of the current list of edges
+  """
+  endCursor: String
+}
+
+"""
+A ListingCollectionItem that represents a specific product with a server-driven layout
+"""
+interface ListingCollectionItem @key(fields: "product { sku } templateId") {
+  """
+  The layout template ID that is applied to this ListingCollectionItem
+  """
+  templateId: String!
+  """
+  The product associated with this ListingCollectionItem
+  """
+  product: Product!
+}
+
+# External and shared schema references
+type Product @key(fields: "sku", resolvable: false) {
+  sku: String!
+}

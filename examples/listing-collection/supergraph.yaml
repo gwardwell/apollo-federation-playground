@@ -1,0 +1,23 @@
+federation_version: 2
+subgraphs:
+  cms_subgraph:
+    routing_url: https://cms.example.com
+    schema:
+      file: ./cms.graphqls
+  global_subgraph:
+    routing_url: https://global.example.com
+    schema:
+      file: ./global.graphqls
+  product_catalog_subgraph:
+    routing_url: https://product-catalog.example.com
+    schema:
+      file: ./product-catalog.graphqls
+  image_subgraph:
+    routing_url: https://image.example.com
+    schema:
+      file: ./image.graphqls
+  product_data_subgraph:
+    routing_url: https://product-data.example.com
+    schema:
+      file: ./product-data.graphqls
+

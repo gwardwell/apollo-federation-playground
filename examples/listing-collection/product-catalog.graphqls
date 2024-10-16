@@ -1,0 +1,120 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.8"
+    import: ["@key", "@external", "@interfaceObject", "@shareable"]
+  )
+
+# Product Catalog Subgraph
+"""
+A cursor connection for ListingCollectionItems for a given product category
+"""
+type CategoryListingCollection implements ListingCollectionCursorConnection
+  @key(fields: "category { categoryId } templateId") {
+  """
+  The ID of the ListingCollectionItem template that will be used
+  for the layout of this collections items
+  """
+  templateId: String!
+  """
+  The category associated with this collection
+  """
+  category: ProductCategory!
+  """
+  The paginated items associated with the cursor connection
+  """
+  items(
+    """
+    The number of requested items following the 'after' cursor
+    """
+    first: Int
+    """
+    The last cursor of the previous record set
+    """
+    after: String
+    """
+    The number of requested items prior to the 'before' cursor
+    """
+    last: Int
+    """
+    The start cursor of the previous record set
+    """
+    before: String
+  ): ListingCollectionItemCursorConnection!
+}
+
+"""
+A cursor connection for ListingCollectionItems matching a given search term
+"""
+type SearchListingCollection implements ListingCollectionCursorConnection
+  @key(fields: "searchTerm templateId") {
+  """
+  The ID of the ListingCollectionItem template that will be used
+  for the layout of this collections items
+  """
+  templateId: String!
+  """
+  The category associated with this collection
+  """
+  searchTerm: String!
+  """
+  The paginated items associated with the cursor connection
+  """
+  items(
+    """
+    The number of requested items following the 'after' cursor
+    """
+    first: Int
+    """
+    The last cursor of the previous record set
+    """
+    after: String
+    """
+    The number of requested items prior to the 'before' cursor
+    """
+    last: Int
+    """
+    The start cursor of the previous record set
+    """
+    before: String
+  ): ListingCollectionItemCursorConnection!
+}
+
+# External and shared schema references
+interface ListingCollectionCursorConnection {
+  items(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): ListingCollectionItemCursorConnection!
+}
+
+type ListingCollectionItemCursorConnection @shareable {
+  edges: [ListingCollectionItemEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ListingCollectionItemEdge @shareable {
+  node: ListingCollectionItem!
+  cursor: String!
+}
+
+type PageInfo @shareable {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+interface ListingCollectionItem @key(fields: "product { sku } templateId") {
+  templateId: String!
+  product: Product!
+}
+
+type Product @key(fields: "sku", resolvable: false) {
+  sku: String!
+}
+
+type ProductCategory @key(fields: "categoryId") {
+  categoryId: Int!
+}
