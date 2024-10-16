@@ -84,7 +84,7 @@ type PageInfo @shareable {
 """
 A ListingCollectionItem that represents a specific product with a server-driven layout
 """
-interface ListingCollectionItem @key(fields: "product { sku } templateId") {
+interface ListingCollectionItem {
   """
   The layout template ID that is applied to this ListingCollectionItem
   """

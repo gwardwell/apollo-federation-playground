@@ -8,7 +8,7 @@ extend schema
 """
 A cursor connection for ListingCollectionItems for a given product category
 """
-type CategoryListingCollection implements ListingCollectionCursorConnection
+type CategoryListingCollection implements ListingCollection
   @key(fields: "category { categoryId } templateId") {
   """
   The ID of the ListingCollectionItem template that will be used
@@ -45,7 +45,7 @@ type CategoryListingCollection implements ListingCollectionCursorConnection
 """
 A cursor connection for ListingCollectionItems matching a given search term
 """
-type SearchListingCollection implements ListingCollectionCursorConnection
+type SearchListingCollection implements ListingCollection
   @key(fields: "searchTerm templateId") {
   """
   The ID of the ListingCollectionItem template that will be used
@@ -79,8 +79,14 @@ type SearchListingCollection implements ListingCollectionCursorConnection
   ): ListingCollectionItemCursorConnection!
 }
 
+type CatalogListingCollectionItem implements ListingCollectionItem
+  @key(fields: "product { sku } templateId") {
+  templateId: String!
+  product: Product!
+}
+
 # External and shared schema references
-interface ListingCollectionCursorConnection {
+interface ListingCollection {
   items(
     first: Int
     after: String
@@ -95,7 +101,7 @@ type ListingCollectionItemCursorConnection @shareable {
 }
 
 type ListingCollectionItemEdge @shareable {
-  node: ListingCollectionItem!
+  node: CatalogListingCollectionItem!
   cursor: String!
 }
 
