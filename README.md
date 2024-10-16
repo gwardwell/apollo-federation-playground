@@ -10,12 +10,6 @@ this repo hosts various Apollo federation examples.
 curl -sSL https://rover.apollo.dev/nix/latest | sh
 ```
 
-[Install router] by running the following:
-
-```
-curl -sSL https://router.apollo.dev/download/nix/latest | sh
-```
-
 ## Composing an example supergraph schema
 
 To compose an example, navigate to the example directory of your choice and run:
@@ -36,7 +30,7 @@ To see the composed supergraph for your chosen example, open the corresponding `
 To view the query plan using Apollo Router, navigate to the example directory of your choice and run:
 
 ```
-rover supergraph compose --config ./supergraph.yaml > supergraph.graphql && ../../router --supergraph supergraph.graphql --dev
+rover dev --supergraph-config supergraph.yaml
 ```
 
 This will compose the supergraph schema for your example and start a Apollo Router using that
@@ -69,4 +63,3 @@ You can then make whatever queries you like against http://localhost:4001/. Note
 will fail to resolve since the resolver endpoints are fake. The query plan will be printed to the terminal.
 
 [install rover]: https://www.apollographql.com/docs/rover/getting-started
-[install router]: https://www.apollographql.com/docs/router/quickstart
