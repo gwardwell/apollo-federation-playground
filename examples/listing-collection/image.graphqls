@@ -1,0 +1,26 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.8"
+    import: ["@key", "@external", "@interfaceObject", "@shareable"]
+  )
+
+# Product Image Subgraph
+scalar URL
+
+type Product @key(fields: "sku") {
+  sku: String!
+  """
+  The primary image of the product
+  """
+  leadImage: Image!
+}
+
+"""
+An image and its associated attributes
+"""
+type Image {
+  """
+  The source URL of the image
+  """
+  src: URL!
+}
