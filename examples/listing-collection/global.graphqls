@@ -8,7 +8,7 @@ extend schema
 """
 A cursor connection for ListingCollectionItems
 """
-interface ListingCollectionCursorConnection {
+interface ListingCollection {
   """
   The paginated items associated with the cursor connection
   """
